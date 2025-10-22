@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class SFIndicadorSiete extends Model
+{
+    protected $table = 'sf_indicador_siete';
+
+    protected $fillable = [
+        'fecha_pago',
+        'egreso',
+        'trm',
+        'proyecto',
+        'valor_egreso',
+        'usd',
+        'contrato',
+        'cdp',
+        'rp',
+        'link_anexo',
+        'verificado',
+        'observacion'
+    ];
+
+}
