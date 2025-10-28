@@ -5,6 +5,7 @@ namespace App\Livewire\Formularios\PromocionPrevencion;
 use App\Livewire\Forms\Formularios\PromocionPrevencion\AgregarObservacion;
 use App\Models\Beneficiario;
 use App\Models\FormularioPromocionPrevencion;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -121,6 +122,8 @@ class Index extends Component
     
     public function render()
     {
+        $user = Auth::user();
+
         $beneficiarios = FormularioPromocionPrevencion::with('beneficiario')
             ->where('seleccionado_muestra', 'si')
             ->where(function ($query) {
@@ -134,6 +137,11 @@ class Index extends Component
                 ->orWhere('estado', 'like', '%'.$this->search.'%');
             });
 
+        if($user->getRoleNames()->first() == 'encuestador')
+        {
+            $beneficiarios->where('encuestador_id', $user->id);
+        }
+        
         if($this->campo && $this->order)
         {
             $beneficiarios = $beneficiarios->orderBy(Beneficiario::select($this->campo)

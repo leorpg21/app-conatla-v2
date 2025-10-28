@@ -62,6 +62,16 @@
                         <span class="truncate">Acción</span>
                     </button>
                 </th>
+
+                <th scope="col" class="p-4 w-[180px] text-center">
+                    {{-- <button class="w-full flex items-center gap-x-2 justify-between hover:cursor-pointer" wire:click="sortable('seleccionado_muestra')">
+                        <span class="truncate">Acción</span>
+                        <x-dynamic-component :component="'lucide-'.($campo === 'seleccionado_muestra' ? $icon  : 'circle')" class="text-green-600 size-4"/>
+                    </button> --}}
+                    <button class="w-full flex items-center gap-x-2 justify-between">
+                        <span class="truncate">Encuestador</span>
+                    </button>
+                </th>
                 
             </tr>
         </thead>
@@ -91,6 +101,21 @@
                             </x-penguin-ui.input.button>
                             
                         </form>
+                    @endif
+                </td>
+                <td class="p-4 truncate">
+                    @if($formulario->seleccionado_muestra == 'si')
+                    <form wire:submit.prevent="updateEncuestador({{ $formulario->id }})" class="flex">
+                        <x-penguin-ui.input.select wire:model="agregar_encuestador.encuestador.{{ $formulario->id }}">
+                            <option value="3">Mayerlis</option>
+                            <option value="4">Liseth</option>
+                            <option value="5">Duris</option>
+                        </x-penguin-ui.input.select>
+                        <x-penguin-ui.input.button icon="refresh-cw" target="updateEncuestador({{ $formulario->id }})"/>
+                    </form>
+                    
+                    @else
+                    <span>{{ $formulario->encuestador->name }} </span>
                     @endif
                 </td>
             </tr>

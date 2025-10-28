@@ -5,6 +5,7 @@ namespace App\Livewire\Formularios\Empleabilidad;
 use App\Livewire\Forms\Formularios\Empleabilidad\AgregarObservacion;
 use App\Models\Beneficiario;
 use App\Models\FormularioEmpleabilidad;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -119,6 +120,8 @@ class Index extends Component
     
     public function render()
     {
+        $user = Auth::user();
+
         $beneficiarios = FormularioEmpleabilidad::with('beneficiario')
             ->where('seleccionado_muestra', 'si')
             ->where(function ($query) {
@@ -131,6 +134,11 @@ class Index extends Component
                 ->orWhere('id', 'like', '%'.$this->search.'%')
                 ->orWhere('estado', 'like', '%'.$this->search.'%');
             });
+
+        if($user->getRoleNames()->first() == 'encuestador')
+        {
+            $beneficiarios->where('encuestador_id', $user->id);
+        }
 
         if($this->campo && $this->order)
         {

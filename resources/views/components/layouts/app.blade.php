@@ -1,4 +1,5 @@
 @php
+    $formularios = Session::get('formularios');
     $expandedForms = false;
     $expandedSfi = false;
     if(request()->routeIs('rumv.*') 
@@ -89,105 +90,102 @@
                     {{-- Formularios --}}
                     @hasanyrole('super_usuario|coordinador|encuestador')
                     <x-penguin-ui.navigation.group-links title="Formularios" :expanded="$expandedForms" icon="book-check">
-                        @canany(['ver_formulario_rumv', 'editar_formulario_rumv'])
+                        @if(($formularios && in_array('rumv', $formularios)) || auth()->user()->getRoleNames()->first() == 'coordinador' | auth()->user()->getRoleNames()->first() == 'super_usuario')
                         <li class="px-1 py-0.5 first:mt-2">
                             <x-penguin-ui.navigation.link :href="route('rumv.index')" :active_page="request()->routeIs('rumv.*')" wire:navigate>
                                 F01-RUMV
                             </x-penguin-ui.navigation.link>
                         </li>
-                        @endcanany
+                        @endif
 
-                        @canany(['ver_formulario_educacion', 'editar_formulario_educacion'])
+                        @if(($formularios && in_array('educacion', $formularios)) || auth()->user()->getRoleNames()->first() == 'coordinador' | auth()->user()->getRoleNames()->first() == 'super_usuario')
                         <li class="px-1 py-0.5 first:mt-2">
                             <x-penguin-ui.navigation.link :href="route('educacion.index')" :active_page="request()->routeIs('educacion.*')" wire:navigate>
                                 F02-Educación
                             </x-penguin-ui.navigation.link>
                         
                         </li>
-                        @endcanany
+                        @endif
 
-                        @canany(['ver_formulario_salud', 'editar_formulario_salud'])
+                        @if(($formularios && in_array('salud', $formularios)) || auth()->user()->getRoleNames()->first() == 'coordinador' | auth()->user()->getRoleNames()->first() == 'super_usuario')
                         <li class="px-1 py-0.5 first:mt-2">
                             <x-penguin-ui.navigation.link :href="route('salud.index')" :active_page="request()->routeIs('salud.*')" wire:navigate>
                                 F03-Salud
                             </x-penguin-ui.navigation.link>
                         </li>
-                        @endcanany
+                        @endif
 
-                        @canany(['ver_formulario_empleabilidad', 'editar_formulario_empleabilidad'])
+                        @if(($formularios && in_array('empleabilidad', $formularios)) || auth()->user()->getRoleNames()->first() == 'coordinador' | auth()->user()->getRoleNames()->first() == 'super_usuario')
                         <li class="px-1 py-0.5 first:mt-2">
                             <x-penguin-ui.navigation.link :href="route('empleabilidad.index')" :active_page="request()->routeIs('empleabilidad.*')" wire:navigate>
                                 F04-Empleabilidad
                             </x-penguin-ui.navigation.link>
                         </li>
-                        @endcanany
+                        @endif
 
-                        @canany(['ver_formulario_ruta_productiva', 'editar_formulario_ruta_productiva'])
+                        @if(($formularios && in_array('ruta_productiva', $formularios)) || auth()->user()->getRoleNames()->first() == 'coordinador' | auth()->user()->getRoleNames()->first() == 'super_usuario')
                         <li class="px-1 py-0.5 first:mt-2">
                             <x-penguin-ui.navigation.link :href="route('ruta_productiva.index')" :active_page="request()->routeIs('ruta_productiva.*')" wire:navigate>
                                 F05-Ruta Productiva
                             </x-penguin-ui.navigation.link>
                         </li>
-                        @endcanany
+                        @endif
 
-                        @canany(['ver_formulario_atencion_campo', 'editar_formulario_atencion_campo'])
+                        @if(($formularios && in_array('atencion_campo', $formularios)) || auth()->user()->getRoleNames()->first() == 'coordinador' | auth()->user()->getRoleNames()->first() == 'super_usuario')
                         {{-- <li class="px-1 py-0.5 first:mt-2">
                             <x-penguin-ui.navigation.link :href="route('atencion_campo.index')" :active_page="request()->routeIs('atencion_campo.*')" wire:navigate>
                                 F06-Atención en el campo
                             </x-penguin-ui.navigation.link>
                         </li> --}}
-                        @endcanany
+                        @endif
 
-                        @canany(['ver_formulario_formacion_trabajo', 'editar_formulario_formacion_trabajo'])
+                        @if(($formularios && in_array('formacion_trabajo', $formularios)) || auth()->user()->getRoleNames()->first() == 'coordinador' | auth()->user()->getRoleNames()->first() == 'super_usuario')
                         <li class="px-1 py-0.5 first:mt-2">
                             <x-penguin-ui.navigation.link :href="route('formacion_trabajo.index')" :active_page="request()->routeIs('formacion_trabajo.*')" wire:navigate>
                                 F07-Formación para el Trabajo
                             </x-penguin-ui.navigation.link>
                         </li>
-                        @endcanany
+                        @endif
 
-                        @canany(['ver_formulario_violencia_genero', 'editar_formulario_violencia_genero'])
+                        @if(($formularios && in_array('violencia_genero', $formularios)) || auth()->user()->getRoleNames()->first() == 'coordinador' | auth()->user()->getRoleNames()->first() == 'super_usuario')
                         <li class="px-1 py-0.5 first:mt-2">
                             <x-penguin-ui.navigation.link :href="route('violencia_genero.index')" :active_page="request()->routeIs('violencia_genero.*')" wire:navigate>
                                 F08-Violencia Genero
                             </x-penguin-ui.navigation.link>
                         </li>
-                        @endcanany
+                        @endif
 
-                        @canany(['ver_formulario_promocion_prevencion', 'editar_formulario_promocion_prevencion'])
+                        @if(($formularios && in_array('promocion_prevencion', $formularios)) || auth()->user()->getRoleNames()->first() == 'coordinador' | auth()->user()->getRoleNames()->first() == 'super_usuario')
                         <li class="px-1 py-0.5 first:mt-2">
                             <x-penguin-ui.navigation.link :href="route('promocion_prevencion.index')" :active_page="request()->routeIs('promocion_prevencion.*')" wire:navigate>
                                 F09-Promoción y Prevención
                             </x-penguin-ui.navigation.link>
                         </li>
-                        @endcanany
+                        @endif
 
-                        @canany(['ver_formulario_sisben', 'editar_formulario_sisben'])
+                        @if(($formularios && in_array('sisben', $formularios)) || auth()->user()->getRoleNames()->first() == 'coordinador' | auth()->user()->getRoleNames()->first() == 'super_usuario')
                         <li class="px-1 py-0.5 first:mt-2">
                             <x-penguin-ui.navigation.link :href="route('sisben.index')" :active_page="request()->routeIs('sisben.*')" wire:navigate>
                                 F10-Sisben
                             </x-penguin-ui.navigation.link>
                         </li>
-                        @endcanany
+                        @endif
 
-
-                        @canany(['ver_formulario_espacio_protector', 'editar_formulario_espacio_protector'])
+                        @if(($formularios && in_array('espacio_protector', $formularios)) || auth()->user()->getRoleNames()->first() == 'coordinador' | auth()->user()->getRoleNames()->first() == 'super_usuario')
                         <li class="px-1 py-0.5 first:mt-2">
                             <x-penguin-ui.navigation.link :href="route('espacio_protector.index')" :active_page="request()->routeIs('espacio_protector.*')" wire:navigate>
                                 F11-Espacio Protector
                             </x-penguin-ui.navigation.link>
                         </li>
-                        @endcanany
+                        @endif
 
-                        @canany(['ver_formulario_psicosocial', 'editar_formulario_psicosocial'])
+                        @if(($formularios && in_array('psicosocial', $formularios)) || auth()->user()->getRoleNames()->first() == 'coordinador' | auth()->user()->getRoleNames()->first() == 'super_usuario')
                         <li class="px-1 py-0.5 first:mt-2">
                             <x-penguin-ui.navigation.link :href="route('psicosocial.index')" :active_page="request()->routeIs('psicosocial.*')" wire:navigate>
                                 F12-Psicosocial
                             </x-penguin-ui.navigation.link>
                         </li>
-                        @endcanany
-
-                        
+                        @endif
                        
 
                     </x-penguin-ui.navigation.group-links>

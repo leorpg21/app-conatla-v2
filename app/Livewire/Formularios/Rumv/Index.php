@@ -5,6 +5,7 @@ namespace App\Livewire\Formularios\Rumv;
 use App\Livewire\Forms\Formularios\Rumv\AgregarObservacion;
 use App\Models\Beneficiario;
 use App\Models\FormularioRUMV;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -36,7 +37,14 @@ class Index extends Component
     #[On(['update-observacion'])]
     public function mount()
     {
+        $user = Auth::user();
+        
         $this->beneficiarios_cards = FormularioRUMV::get()->where('seleccionado_muestra', 'si');
+
+        if($user->getRoleNames()->first() == 'encuestador')
+        {
+            $this->beneficiarios_cards->where('encuestador_id', $user->id);
+        }
         $this->gestionado = 0;
         $this->encuestado = 0;
         $this->sin_revisar = 0;
@@ -119,6 +127,8 @@ class Index extends Component
     
     public function render()
     {
+        $user = Auth::user();
+
         $beneficiarios = FormularioRUMV::with('beneficiario')
             ->where('seleccionado_muestra', 'si')
             ->where(function ($query) {
@@ -131,6 +141,11 @@ class Index extends Component
                 ->orWhere('id', 'like', '%'.$this->search.'%')
                 ->orWhere('estado', 'like', '%'.$this->search.'%');
             });
+
+        if($user->getRoleNames()->first() == 'encuestador')
+        {
+            $beneficiarios->where('encuestador_id', $user->id);
+        }
 
         if($this->campo && $this->order)
         {

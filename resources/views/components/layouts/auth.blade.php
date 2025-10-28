@@ -10,7 +10,7 @@
             style="background-image: url('{{ asset('assets/image/bg/bg-informe.jpg') }}'); background-size: cover; background-position: center;">
             
             <!-- Overlay -->
-            <div class="absolute inset-0 bg-black/50"></div>
+            <div class="absolute inset-0 bg-black/20"></div>
 
             <!-- Contenido -->
             <div class="relative z-10 flex items-center gap-3">

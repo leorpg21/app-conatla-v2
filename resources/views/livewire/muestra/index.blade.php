@@ -24,38 +24,11 @@
     {{-- Titulo --}}
     <h2 class="mt-3 text-2xl text-green-800 font-bold">Selección Para La Muestra</h2>
     
-    {{-- <div class="w-full mx-auto  py-6 grid gap-6 sm:grid-cols-1 md:grid-cols-3">
-        <!-- Tarjeta 1 -->
-        <div class="bg-green-800 rounded-lg shadow p-6 flex flex-col">
-            <h2 class="text-xl text-white font-semibold mb-4 truncate">Gestor Uno</h2>
-            <p class="text-gray-300 truncate text-sm">F1-FORMULARIO RUMV <span class="text-white font-semibold">52</span> MUESTRAS</p>
-            <p class="text-gray-300 truncate text-sm">F1-FORMULARIO SALUD <span class="text-white font-semibold">30</span> MUESTRAS</p>
-            <p class="text-gray-300 truncate text-sm">F1-FORMULARIO Educación <span class="text-white font-semibold">12</span> MUESTRAS</p>
-        </div>
+    {{-- Tarjetas de Muestra --}}
+    @include('partials.evi.seleccion-muestra.tarjetas-muestra')
 
-        <!-- Tarjeta 1 -->
-        <div class="bg-green-800 rounded-lg shadow p-6 flex flex-col">
-            <h2 class="text-xl text-white font-semibold mb-4 truncate">Gestor Uno</h2>
-            <p class="text-gray-300 truncate text-sm">F1-FORMULARIO RUMV <span class="text-white font-semibold">52</span> MUESTRAS</p>
-            <p class="text-gray-300 truncate text-sm">F1-FORMULARIO SALUD <span class="text-white font-semibold">30</span> MUESTRAS</p>
-            <p class="text-gray-300 truncate text-sm">F1-FORMULARIO Educación <span class="text-white font-semibold">12</span> MUESTRAS</p>
-        </div>
 
-        <!-- Tarjeta 1 -->
-        <div class="bg-green-800 rounded-lg shadow p-6 flex flex-col">
-            <h2 class="text-xl text-white font-semibold mb-4 truncate">Gestor Uno</h2>
-            <p class="text-gray-300 truncate text-sm">F1-FORMULARIO RUMV <span class="text-white font-semibold">52</span> MUESTRAS</p>
-            <p class="text-gray-300 truncate text-sm">F1-FORMULARIO SALUD <span class="text-white font-semibold">30</span> MUESTRAS</p>
-            <p class="text-gray-300 truncate text-sm">F1-FORMULARIO Educación <span class="text-white font-semibold">12</span> MUESTRAS</p>
-        </div>
-
-       
-
-        
-    </div> --}}
-
-  
-
+    {{-- Tabla --}}
     @include('partials.evi.seleccion-muestra.tabla')
     
 </div>

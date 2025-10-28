@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Muestra;
 
+use App\Livewire\Forms\Muestra\AgregarEncuestador;
 use App\Livewire\Forms\Muestra\EliminarMuestra;
 use App\Livewire\Forms\Muestra\SubirMuestra;
+use App\Livewire\Forms\Muestra\VerMuestraEncuestador;
 use App\Models\Beneficiario;
 use App\Models\FormularioAtencionCampo;
 use App\Models\FormularioEducacion;
@@ -17,6 +19,7 @@ use App\Models\FormularioRutaProductiva;
 use App\Models\FormularioSalud;
 use App\Models\FormularioSisben;
 use App\Models\FormularioViolenciaGenero;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -35,59 +38,22 @@ class Index extends Component
 
     public SubirMuestra $subir_muestra;
     public EliminarMuestra $eliminar_muestra;
+    public VerMuestraEncuestador $ver_muestra_encuestador;
+    public AgregarEncuestador $agregar_encuestador;
 
+    public $muestra_rumv;
 
     // Cargamos los datos de los gestores
 
-    // public $mayerlis_muestra = [
-    //     'rumv' => 0,
-    //     'educacion' => 0,
-    //     'salud' => 0,
-    //     'empleabilidad' => 0,
-    //     'ruta_productiva' => 0,
-    //     'atencion_campo' => 0,
-    //     'formacion_trabajo' => 0,
-    //     'violencia_genero' => 0,
-    //     'promocion_prevencion' => 0,
-    //     'sisben' => 0,
-    //     'espacio_protector' => 0,
-    //     'psicosocial' => 0,
-    // ];
+    
 
-    // public $liseth_muestra = [
-    //     'rumv' => 0,
-    //     'educacion' => 0,
-    //     'salud' => 0,
-    //     'empleabilidad' => 0,
-    //     'ruta_productiva' => 0,
-    //     'atencion_campo' => 0,
-    //     'formacion_trabajo' => 0,
-    //     'violencia_genero' => 0,
-    //     'promocion_prevencion' => 0,
-    //     'sisben' => 0,
-    //     'espacio_protector' => 0,
-    //     'psicosocial' => 0,
-    // ];
-
-    // public $duris_muestra = [
-    //     'rumv' => 0,
-    //     'educacion' => 0,
-    //     'salud' => 0,
-    //     'empleabilidad' => 0,
-    //     'ruta_productiva' => 0,
-    //     'atencion_campo' => 0,
-    //     'formacion_trabajo' => 0,
-    //     'violencia_genero' => 0,
-    //     'promocion_prevencion' => 0,
-    //     'sisben' => 0,
-    //     'espacio_protector' => 0,
-    //     'psicosocial' => 0,
-    // ];
-
+    #[On('update-muestra')]
     public function mount()
     {
-        
+        $this->ver_muestra_encuestador->loadMuestra();
+        $this->agregar_encuestador->loadEncuestador($this->selectedFormulario);
     }
+
     // Forzar la paginación a la página 1 al buscar o cambiar de formulario
     public function updatingSearch()
     {
@@ -134,6 +100,19 @@ class Index extends Component
         $this->campo = $campo;
     }
 
+    public function updateEncuestador($idFormulario)
+    {
+        $this->agregar_encuestador->update($idFormulario, $this->selectedFormulario);
+        
+        if($this->agregar_encuestador->message == 'success')
+        {
+            $this->successMessage[] = 'Se realizado los cambios correctamente!';
+        }else
+        {
+            $this->errorMessage[] = 'Ha ocurrido un error!';
+        }
+        $this->dispatch('update-muestra');
+    }
     public function subirMuestra($id)
     {
         $this->subir_muestra->subir($this->selectedFormulario, $id);
@@ -146,6 +125,7 @@ class Index extends Component
             $this->errorMessage[] = 'Ha ocurrido un error!';
         }
        
+        $this->dispatch('update-muestra');
     }
 
 
@@ -160,6 +140,8 @@ class Index extends Component
         {
             $this->errorMessage[] = 'Ha ocurrido un error!';
         }
+
+        $this->dispatch('update-muestra');
     }
 
     public function render()
